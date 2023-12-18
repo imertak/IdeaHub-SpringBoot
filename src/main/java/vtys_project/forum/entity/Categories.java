@@ -11,6 +11,7 @@ public class Categories {
     private String categoryName;
     private String categoryDescription;
 
+
     // Getter and Setter Methods
 
     public int getCategoryID() {
@@ -36,4 +37,6 @@ public class Categories {
     public void setCategoryDescription(String categoryDescription) {
         this.categoryDescription = categoryDescription;
     }
+
+
 }

@@ -3,6 +3,8 @@ package vtys_project.forum.entity;
 import jakarta.persistence.Id;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class Topics {
 
@@ -10,6 +12,7 @@ public class Topics {
     private int topicID;
     private String title;
     private String content;
+    private Date creationDate;
     private int userID;
     private int categoryID;
 
@@ -54,5 +57,13 @@ public class Topics {
 
     public void setCategoryID(int categoryID) {
         this.categoryID = categoryID;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }

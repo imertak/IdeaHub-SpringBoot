@@ -21,14 +21,14 @@ public class CommentsController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Map<String, Object>>> getAllComments() {
-        List<Map<String, Object>> comments = commentsService.getAllComments();
+    public ResponseEntity<List<Comments>> getAllComments() {
+        List<Comments> comments = commentsService.getAllComments();
         return ResponseEntity.ok(comments);
     }
 
     @GetMapping("/{commentId}")
-    public ResponseEntity<Map<String, Object>> getCommentById(@PathVariable int commentId) {
-        Map<String, Object> comment = commentsService.getCommentById(commentId);
+    public ResponseEntity<Comments> getCommentById(@PathVariable int commentId) {
+        Comments comment = commentsService.getCommentById(commentId);
         return ResponseEntity.ok(comment);
     }
 

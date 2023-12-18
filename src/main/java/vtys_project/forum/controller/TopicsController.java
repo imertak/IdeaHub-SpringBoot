@@ -1,13 +1,15 @@
 package vtys_project.forum.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vtys_project.forum.dto.entity_Dto.TopicsDto;
+import vtys_project.forum.dto.entity_Dto.TopicsResponse;
 import vtys_project.forum.entity.Topics;
 import vtys_project.forum.service.TopicsService;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/topics")
@@ -20,33 +22,36 @@ public class TopicsController {
         this.topicsService = topicsService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Map<String, Object>>> getAllTopics() {
-        List<Map<String, Object>> topics = topicsService.getAllTopics();
-        return ResponseEntity.ok(topics);
+    @PostMapping("/add")
+    public ResponseEntity<Topics> addTopic(@RequestBody TopicsDto topic) {
+        return new ResponseEntity<>(topicsService.addTopic(topic), HttpStatus.CREATED) ;
     }
 
-    @GetMapping("/{topicId}")
-    public ResponseEntity<Map<String, Object>> getTopicById(@PathVariable int topicId) {
-        Map<String, Object> topic = topicsService.getTopicById(topicId);
-        return ResponseEntity.ok(topic);
+    @GetMapping("/{id}")
+    public Topics getTopicById(@PathVariable int id) {
+        return topicsService.getTopicById(id);
     }
 
-    @PostMapping
-    public ResponseEntity<Void> addTopic(@RequestBody Topics topic) {
-        topicsService.addTopic(topic);
-        return ResponseEntity.ok().build();
+    @GetMapping("/getAll")
+    public List<Topics> getAllTopics() {
+        return topicsService.getAllTopics();
     }
 
-    @PutMapping("/{topicId}")
-    public ResponseEntity<Void> updateTopic(@PathVariable int topicId, @RequestBody Topics topic) {
-        topicsService.updateTopic(topicId, topic);
-        return ResponseEntity.ok().build();
+    @DeleteMapping("/{id}")
+    public void deleteTopicById(@PathVariable int id) {
+        topicsService.deleteTopicById(id);
     }
 
-    @DeleteMapping("/{topicId}")
-    public ResponseEntity<Void> deleteTopic(@PathVariable int topicId) {
-        topicsService.deleteTopic(topicId);
-        return ResponseEntity.ok().build();
+    @PutMapping("/{id}")
+    public void updateTopic(@PathVariable int id, @RequestBody Topics updatedTopic) {
+        topicsService.updateTopic(id, updatedTopic);
     }
+
+    @GetMapping("/getNewTopics")
+    public ResponseEntity<List<TopicsResponse>> getNewTopics(){
+        return new ResponseEntity<>(topicsService.getNewTopics(),HttpStatus.OK);
+    }
+
+
+
 }

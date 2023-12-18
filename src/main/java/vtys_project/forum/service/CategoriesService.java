@@ -19,6 +19,10 @@ public class CategoriesService {
         return category;
     }
 
+    public Categories getCategories(int categoriesID){
+        return categoriesRepository.getCategoriesById(categoriesID);
+    }
+
     public List<Categories> getAllCategories(){
         List<Categories> categoriesList = categoriesRepository.getAllCategories();
         return categoriesList;

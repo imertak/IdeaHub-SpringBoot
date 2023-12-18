@@ -4,6 +4,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class Users {
     @Id
@@ -13,6 +15,7 @@ public class Users {
     private String password;
     @Lob
     private byte[] profileImage;
+    private Date creationDate;
     private int roleID;
 
     // Getter and Setter Methods
@@ -64,5 +67,13 @@ public class Users {
 
     public void setRoleID(int roleID) {
         this.roleID = roleID;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }

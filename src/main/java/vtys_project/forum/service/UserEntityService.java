@@ -6,7 +6,6 @@ import vtys_project.forum.entity.Users;
 import vtys_project.forum.repository.UsersRepository;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserEntityService {
@@ -18,23 +17,31 @@ public class UserEntityService {
         this.usersRepository = usersRepository;
     }
 
-    public List<Map<String, Object>> getAllUsers() {
+    public Users addUser(Users user) {
+        return usersRepository.addUser(user);
+    }
+
+    public Users getUserById(int id) {
+        return usersRepository.getUserById(id);
+    }
+
+    public List<Users> getAllUsers() {
         return usersRepository.getAllUsers();
     }
 
-    public Map<String, Object> getUserById(int userId) {
-        return usersRepository.getUserById(userId);
+    public void deleteUserById(int userId) {
+        usersRepository.deleteUserById(userId);
     }
 
-    public void addUser(Users users) {
-        usersRepository.addUser(users);
+    public void updateUser(int id, Users updatedUser) {
+        usersRepository.updateUser(id, updatedUser);
     }
 
-    public void updateUser(int userId, Users users) {
-        usersRepository.updateUser(userId, users);
+    public Users getUserByUsername(String username){
+        return usersRepository.findByUsername(username);
     }
 
-    public void deleteUser(int userId) {
-        usersRepository.deleteUser(userId);
+    public List<Users> getNewUsers(){
+        return usersRepository.getNewUsers();
     }
 }

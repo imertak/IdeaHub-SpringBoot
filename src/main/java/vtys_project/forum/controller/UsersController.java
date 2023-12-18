@@ -1,48 +1,57 @@
 package vtys_project.forum.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vtys_project.forum.entity.Users;
 import vtys_project.forum.service.UserEntityService;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
 public class UsersController {
-    
+
+    private final UserEntityService usersService;
+
     @Autowired
-    UserEntityService usersService;
-
-    @GetMapping
-    public ResponseEntity<List<Map<String, Object>>> getAllUsers() {
-        List<Map<String, Object>> users = usersService.getAllUsers();
-        return ResponseEntity.ok(users);
-    }
-
-    @GetMapping("/{userId}")
-    public ResponseEntity<Map<String, Object>> getUserById(@PathVariable int userId) {
-        Map<String, Object> user = usersService.getUserById(userId);
-        return ResponseEntity.ok(user);
+    public UsersController(UserEntityService usersService) {
+        this.usersService = usersService;
     }
 
     @PostMapping
-    public ResponseEntity<Void> addUser(@RequestBody Users users) {
-        usersService.addUser(users);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Users> addUser(@RequestBody Users user) {
+        return new ResponseEntity<>(usersService.addUser(user), HttpStatus.CREATED) ;
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Void> updateUser(@PathVariable int userId, @RequestBody Users users) {
-        usersService.updateUser(userId, users);
-        return ResponseEntity.ok().build();
+    @GetMapping("/{id}")
+    public ResponseEntity<Users> getUserById(@PathVariable int id) {
+        return new ResponseEntity<>(usersService.getUserById(id), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable int userId) {
-        usersService.deleteUser(userId);
-        return ResponseEntity.ok().build();
+    @GetMapping
+    public ResponseEntity<List<Users>> getAllUsers() {
+        return new ResponseEntity<>(usersService.getAllUsers(), HttpStatus.OK) ;
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUserById(@PathVariable int id) {
+        usersService.deleteUserById(id);
+    }
+
+    @PutMapping("/{id}")
+    public void updateUser(@PathVariable int id, @RequestBody Users updatedUser) {
+        usersService.updateUser(id, updatedUser);
+    }
+
+    @GetMapping("/getUserByUsername/{username}")
+    public ResponseEntity<Users> getUserByUsername(@PathVariable String username){
+        return new ResponseEntity<>(usersService.getUserByUsername(username),HttpStatus.OK);
+    }
+
+    @GetMapping("/getNewUsers")
+    public ResponseEntity<List<Users>> getNewUsers(){
+        return new ResponseEntity<>(usersService.getNewUsers(),HttpStatus.OK);
     }
 }

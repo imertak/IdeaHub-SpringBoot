@@ -2,11 +2,12 @@ package vtys_project.forum.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vtys_project.forum.dto.entity_Dto.TopicsDto;
+import vtys_project.forum.dto.entity_Dto.TopicsResponse;
 import vtys_project.forum.entity.Topics;
 import vtys_project.forum.repository.TopicsRepository;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class TopicsService {
@@ -18,23 +19,29 @@ public class TopicsService {
         this.topicsRepository = topicsRepository;
     }
 
-    public List<Map<String, Object>> getAllTopics() {
+    public Topics addTopic(TopicsDto topic) {
+        return topicsRepository.addTopic(topic);
+    }
+
+    public Topics getTopicById(int id) {
+        return topicsRepository.getTopicById(id);
+    }
+
+    public List<Topics> getAllTopics() {
         return topicsRepository.getAllTopics();
     }
 
-    public Map<String, Object> getTopicById(int topicId) {
-        return topicsRepository.getTopicById(topicId);
+    public void deleteTopicById(int topicId) {
+        topicsRepository.deleteTopicById(topicId);
     }
 
-    public void addTopic(Topics topic) {
-        topicsRepository.addTopic(topic);
+    public void updateTopic(int id, Topics updatedTopic) {
+        topicsRepository.updateTopic(id, updatedTopic);
     }
 
-    public void updateTopic(int topicId, Topics topic) {
-        topicsRepository.updateTopic(topicId, topic);
+    public List<TopicsResponse> getNewTopics(){
+        return topicsRepository.getNewTopics();
     }
 
-    public void deleteTopic(int topicId) {
-        topicsRepository.deleteTopic(topicId);
-    }
+
 }

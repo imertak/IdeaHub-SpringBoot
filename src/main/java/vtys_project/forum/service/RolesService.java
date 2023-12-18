@@ -2,10 +2,10 @@ package vtys_project.forum.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vtys_project.forum.entity.Roles;
 import vtys_project.forum.repository.RolesRepository;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class RolesService {
@@ -17,23 +17,23 @@ public class RolesService {
         this.rolesRepository = rolesRepository;
     }
 
-    public List<Map<String, Object>> getAllRoles() {
+    public Roles addRole(Roles role) {
+        return rolesRepository.addRole(role);
+    }
+
+    public Roles getRoleById(String roleName) {
+        return rolesRepository.getRoleByRoleName(roleName);
+    }
+
+    public List<Roles> getAllRoles() {
         return rolesRepository.getAllRoles();
     }
 
-    public Map<String, Object> getRoleById(int roleId) {
-        return rolesRepository.getRoleById(roleId);
+    public void deleteRoleById(int roleId) {
+        rolesRepository.deleteRoleById(roleId);
     }
 
-    public void addRole(String roleName) {
-        rolesRepository.addRole(roleName);
-    }
-
-    public void updateRole(int roleId, String roleName) {
-        rolesRepository.updateRole(roleId, roleName);
-    }
-
-    public void deleteRole(int roleId) {
-        rolesRepository.deleteRole(roleId);
+    public void updateRole(int id, Roles updatedRole) {
+        rolesRepository.updateRole(id, updatedRole);
     }
 }

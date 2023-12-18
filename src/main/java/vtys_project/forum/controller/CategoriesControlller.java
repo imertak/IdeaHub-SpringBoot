@@ -23,6 +23,11 @@ public class CategoriesControlller {
         return new ResponseEntity<Categories>(categoriesService.addCategory(category), HttpStatus.CREATED);
     }
 
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Categories> getCategories(@PathVariable int id){
+        return new ResponseEntity<>(categoriesService.getCategories(id),HttpStatus.OK);
+    }
+
     @GetMapping("/getAll")
     public ResponseEntity<List<Categories>> getAllcategories(){
         return new ResponseEntity<>(categoriesService.getAllCategories(),HttpStatus.OK);

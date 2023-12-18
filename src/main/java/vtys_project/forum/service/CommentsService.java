@@ -18,11 +18,11 @@ public class CommentsService {
         this.commentsRepository = commentsRepository;
     }
 
-    public List<Map<String, Object>> getAllComments() {
+    public List<Comments> getAllComments() {
         return commentsRepository.getAllComments();
     }
 
-    public Map<String, Object> getCommentById(int commentId) {
+    public Comments getCommentById(int commentId) {
         return commentsRepository.getCommentById(commentId);
     }
 
@@ -35,6 +35,6 @@ public class CommentsService {
     }
 
     public void deleteComment(int commentId) {
-        commentsRepository.deleteComment(commentId);
+        commentsRepository.deleteCommentById(commentId);
     }
 }

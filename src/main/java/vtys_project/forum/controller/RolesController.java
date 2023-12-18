@@ -2,10 +2,10 @@ package vtys_project.forum.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import vtys_project.forum.entity.Roles;
 import vtys_project.forum.service.RolesService;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/roles")
@@ -18,28 +18,28 @@ public class RolesController {
         this.rolesService = rolesService;
     }
 
+    @PostMapping
+    public Roles addRole(@RequestBody Roles role) {
+        return rolesService.addRole(role);
+    }
+
+    @GetMapping("/{roleName}")
+    public Roles getRoleById(@PathVariable String roleName) {
+        return rolesService.getRoleById(roleName);
+    }
+
     @GetMapping
-    public List<Map<String, Object>> getAllRoles() {
+    public List<Roles> getAllRoles() {
         return rolesService.getAllRoles();
     }
 
-    @GetMapping("/{id}")
-    public Map<String, Object> getRoleById(@PathVariable int id) {
-        return rolesService.getRoleById(id);
-    }
-
-    @PostMapping
-    public void addRole(@RequestBody Map<String, Object> role) {
-        rolesService.addRole((String) role.get("roleName"));
+    @DeleteMapping("/{id}")
+    public void deleteRoleById(@PathVariable int id) {
+        rolesService.deleteRoleById(id);
     }
 
     @PutMapping("/{id}")
-    public void updateRole(@PathVariable int id, @RequestBody Map<String, Object> updatedRole) {
-        rolesService.updateRole(id, (String) updatedRole.get("roleName"));
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteRole(@PathVariable int id) {
-        rolesService.deleteRole(id);
+    public void updateRole(@PathVariable int id, @RequestBody Roles updatedRole) {
+        rolesService.updateRole(id, updatedRole);
     }
 }

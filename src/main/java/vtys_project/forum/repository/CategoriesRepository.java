@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import vtys_project.forum.entity.Categories;
+import vtys_project.forum.entity.Comments;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -38,6 +39,25 @@ public class CategoriesRepository {
         } catch (SQLException e) {
             e.printStackTrace();
 
+        }
+        return categories;
+    }
+
+    public Categories getCategoriesById(int id) {
+        Categories categories = new Categories();
+        String sql = "SELECT * FROM categories WHERE categoryID=?";
+        try (Connection connection = DriverManager.getConnection(sql_url, sql_username, sql_password);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    categories.setCategoryID(resultSet.getInt("categoryID"));
+                    categories.setCategoryName(resultSet.getString("categoryName"));
+                    categories.setCategoryDescription(resultSet.getString("categoryDescription"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return categories;
     }
@@ -94,6 +114,8 @@ public class CategoriesRepository {
             e.printStackTrace();
         }
     }
+
+
 
 
 
