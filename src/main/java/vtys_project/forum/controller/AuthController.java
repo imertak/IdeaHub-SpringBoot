@@ -28,7 +28,6 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "*" )
 public class AuthController {
     private AuthenticationManager authenticationManager;
     private UsersRepository userRepository;
@@ -63,7 +62,7 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setEmail(registerDto.getEmail());
         user.setCreationDate(Calendar.getInstance().getTime());
-        user.setProfileImage(registerDto.getProfileImage());
+        user.setProfileImage(registerDto.getProfileImage());//profileImage BLOB tipinde
 
         Roles role = roleRepository.getRoleByRoleName("ROLE_USER");
         user.setRoleID(role.getRoleID());
@@ -87,7 +86,6 @@ public class AuthController {
         AuthResponseDto authResponseDto = new AuthResponseDto(accessToken,"Bearer ");
         return authResponseDto;
     }
-
 
 
     private String getJWTFromRequest(HttpServletRequest request){

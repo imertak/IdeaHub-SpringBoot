@@ -43,5 +43,7 @@ public class TopicsService {
         return topicsRepository.getNewTopics();
     }
 
-
+    public TopicsResponse getTopic(int id){
+        return topicsRepository.getTopic(id);
+    }
 }

@@ -15,5 +15,19 @@ public class Roles {
     //Getter and Setter Methods
 
 
+    public int getRoleID() {
+        return RoleID;
+    }
 
+    public void setRoleID(int roleID) {
+        RoleID = roleID;
+    }
+
+    public String getRoleName() {
+        return RoleName;
+    }
+
+    public void setRoleName(String roleName) {
+        RoleName = roleName;
+    }
 }

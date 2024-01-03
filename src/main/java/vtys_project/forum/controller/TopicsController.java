@@ -52,6 +52,9 @@ public class TopicsController {
         return new ResponseEntity<>(topicsService.getNewTopics(),HttpStatus.OK);
     }
 
-
+    @GetMapping("/getTopic/{id}")
+    public ResponseEntity<TopicsResponse> getTopic(@PathVariable int id){
+        return new ResponseEntity<>(topicsService.getTopic(id),HttpStatus.OK);
+    }
 
 }

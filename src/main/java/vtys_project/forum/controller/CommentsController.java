@@ -1,8 +1,10 @@
 package vtys_project.forum.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vtys_project.forum.dto.entity_Dto.CommentsResponse;
 import vtys_project.forum.entity.Comments;
 import vtys_project.forum.service.CommentsService;
 
@@ -32,9 +34,9 @@ public class CommentsController {
         return ResponseEntity.ok(comment);
     }
 
-    @PostMapping
-    public ResponseEntity<Void> addComment(@RequestBody Comments comment) {
-        commentsService.addComment(comment);
+    @PostMapping("/add/{username}")
+    public ResponseEntity<Void> addComment(@RequestBody Comments comment,@PathVariable String username) {
+        commentsService.addComment(comment,username);
         return ResponseEntity.ok().build();
     }
 
@@ -48,5 +50,10 @@ public class CommentsController {
     public ResponseEntity<Void> deleteComment(@PathVariable int commentId) {
         commentsService.deleteComment(commentId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/getCommentByTopicID/{topicID}")
+    public ResponseEntity<List<CommentsResponse>> getCommentByTopicID(@PathVariable int topicID){
+        return new ResponseEntity<>(commentsService.getCommentByTopicID(topicID), HttpStatus.OK);
     }
 }

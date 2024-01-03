@@ -109,6 +109,8 @@ public class TopicsRepository {
         return topic;
     }
 
+
+
     public List<Topics> getAllTopics() {
         List<Topics> topicsList = new ArrayList<>();
         String sql = "SELECT * FROM topics";
@@ -172,6 +174,7 @@ public class TopicsRepository {
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
+
             while (resultSet.next()) {
                 TopicsResponse topicsResponse = new TopicsResponse();
                 topicsResponse.setTopicID(resultSet.getInt("topicID"));
@@ -194,6 +197,38 @@ public class TopicsRepository {
         }
 
         return topicsResponseList;
+    }
+
+    public TopicsResponse getTopic(int id){
+        TopicsResponse topicsResponse = new TopicsResponse();
+        String sql = "SELECT topicID, title, content, topics.creationDate as topicCreationDate, topics.userID, topics.categoryID,categoryName,categoryDescription, username, profileImage, users.creationDate as userCreationDate  FROM topics JOIN categories ON topics.categoryID=categories.categoryID JOIN users ON topics.userID=users.userID WHERE topicID=? ORDER BY topicID DESC LIMIT 100";
+
+        try (Connection connection = DriverManager.getConnection(sql_url, sql_username, sql_password);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    topicsResponse.setTopicID(resultSet.getInt("topicID"));
+                    topicsResponse.setTitle(resultSet.getString("title"));
+                    topicsResponse.setContent(resultSet.getString("content"));
+                    topicsResponse.setTopicCreationDate(resultSet.getDate("topicCreationDate"));
+                    topicsResponse.setUserID(resultSet.getInt("userID"));
+                    topicsResponse.setCategoryID(resultSet.getInt("categoryID"));
+                    topicsResponse.setCategoryName(resultSet.getString("categoryName"));
+                    topicsResponse.setCategoryDescription(resultSet.getString("categoryDescription"));
+                    topicsResponse.setUsername(resultSet.getString("username"));
+                    topicsResponse.setProfileImage(resultSet.getBytes("profileImage"));
+                    topicsResponse.setUserCreationDate(resultSet.getDate("userCreationDate"));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return topicsResponse;
     }
 
 
