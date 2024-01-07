@@ -57,4 +57,15 @@ public class TopicsController {
         return new ResponseEntity<>(topicsService.getTopic(id),HttpStatus.OK);
     }
 
+    @GetMapping("/getSearchTopics/{searchTopic}")
+    public ResponseEntity<List<TopicsResponse>> getSearchTopics(@PathVariable String searchTopic){
+        return new ResponseEntity<>(topicsService.getSearchTopics(searchTopic),HttpStatus.OK);
+    }
+
+    @GetMapping("/getMyTopics/{username}")
+    public ResponseEntity<List<TopicsResponse>> getMyTopics(@PathVariable String username){
+        return new ResponseEntity<>(topicsService.getMyTopics(username), HttpStatus.OK);
+
+    }
+
 }

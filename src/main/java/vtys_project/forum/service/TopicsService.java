@@ -46,4 +46,10 @@ public class TopicsService {
     public TopicsResponse getTopic(int id){
         return topicsRepository.getTopic(id);
     }
+
+    public List<TopicsResponse> getSearchTopics(String searchTopic){return topicsRepository.getSearchTopics(searchTopic);}
+
+    public List<TopicsResponse> getMyTopics(String username){
+        return topicsRepository.getMyTopics(username);
+    }
 }

@@ -231,6 +231,73 @@ public class TopicsRepository {
         return topicsResponse;
     }
 
+    public List<TopicsResponse> getSearchTopics(String searchTopic){
+        List<TopicsResponse> topicsResponseList = new ArrayList<>();
+        String sql = "SELECT topicID, title, content, topics.creationDate as topicCreationDate, topics.userID, topics.categoryID,categoryName,categoryDescription, username, profileImage, users.creationDate as userCreationDate  FROM topics JOIN categories ON topics.categoryID=categories.categoryID JOIN users ON topics.userID=users.userID WHERE title LIKE ? ORDER BY topicID DESC LIMIT 100 " ;
+        try (Connection connection = DriverManager.getConnection(sql_url, sql_username, sql_password);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            // Parametreyi burada set et
+            preparedStatement.setString(1, "%" + searchTopic + "%");
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    TopicsResponse topicsResponse = new TopicsResponse();
+                    topicsResponse.setTopicID(resultSet.getInt("topicID"));
+                    topicsResponse.setTitle(resultSet.getString("title"));
+                    topicsResponse.setContent(resultSet.getString("content"));
+                    topicsResponse.setTopicCreationDate(resultSet.getDate("topicCreationDate"));
+                    topicsResponse.setUserID(resultSet.getInt("userID"));
+                    topicsResponse.setCategoryID(resultSet.getInt("categoryID"));
+                    topicsResponse.setCategoryName(resultSet.getString("categoryName"));
+                    topicsResponse.setCategoryDescription(resultSet.getString("categoryDescription"));
+                    topicsResponse.setUsername(resultSet.getString("username"));
+                    topicsResponse.setProfileImage(resultSet.getBytes("profileImage"));
+                    topicsResponse.setUserCreationDate(resultSet.getDate("userCreationDate"));
+                    topicsResponseList.add(topicsResponse);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return topicsResponseList;
+    }
+
+    public List<TopicsResponse> getMyTopics(String username){
+        List<TopicsResponse> topicsResponseList = new ArrayList<>();
+        String sql = "SELECT topicID, title, content, topics.creationDate as topicCreationDate, topics.userID, topics.categoryID,categoryName,categoryDescription, username, profileImage, users.creationDate as userCreationDate  FROM topics JOIN categories ON topics.categoryID=categories.categoryID JOIN users ON topics.userID=users.userID WHERE users.userID=(SELECT userID FROM users WHERE username=?) ORDER BY topicID DESC";
+        try (Connection connection = DriverManager.getConnection(sql_url, sql_username, sql_password);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            // Parametreyi burada set et
+            preparedStatement.setString(1, username);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    TopicsResponse topicsResponse = new TopicsResponse();
+                    topicsResponse.setTopicID(resultSet.getInt("topicID"));
+                    topicsResponse.setTitle(resultSet.getString("title"));
+                    topicsResponse.setContent(resultSet.getString("content"));
+                    topicsResponse.setTopicCreationDate(resultSet.getDate("topicCreationDate"));
+                    topicsResponse.setUserID(resultSet.getInt("userID"));
+                    topicsResponse.setCategoryID(resultSet.getInt("categoryID"));
+                    topicsResponse.setCategoryName(resultSet.getString("categoryName"));
+                    topicsResponse.setCategoryDescription(resultSet.getString("categoryDescription"));
+                    topicsResponse.setUsername(resultSet.getString("username"));
+                    topicsResponse.setProfileImage(resultSet.getBytes("profileImage"));
+                    topicsResponse.setUserCreationDate(resultSet.getDate("userCreationDate"));
+                    topicsResponseList.add(topicsResponse);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return topicsResponseList;
+    }
 
 
 

@@ -10,6 +10,8 @@ public class Favourites {
     private int userID;
     private int topicID;
 
+
+
     // Getter and Setter Methods
 
     public int getFavouritesID() {

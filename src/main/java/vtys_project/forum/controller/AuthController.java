@@ -62,7 +62,7 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setEmail(registerDto.getEmail());
         user.setCreationDate(Calendar.getInstance().getTime());
-        user.setProfileImage(registerDto.getProfileImage());//profileImage BLOB tipinde
+        //user.setProfileImage(registerDto.getProfileImage());//profileImage BLOB tipinde
 
         Roles role = roleRepository.getRoleByRoleName("ROLE_USER");
         user.setRoleID(role.getRoleID());
